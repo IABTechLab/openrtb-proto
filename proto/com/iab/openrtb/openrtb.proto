@@ -1,0 +1,65 @@
+/**
+ * The UML class diagram in the documentation illustrates the overall payload
+ * structure including both request and response objects. Payloads are rooted in
+ * named objects; Openrtb as a common root and Request and Response as
+ * subordinate roots to identify the payload type.
+ *
+ * Throughout the object model subsections, attributes may be indicated as
+ * “Required” or “Recommended”. Attributes are deemed required only if their
+ * omission would break the protocol and is not necessarily an indicator of
+ * business value otherwise. Attributes are recommended when their omission
+ * would not break the protocol but would dramatically diminish business value.
+ *
+ * From a specification compliance perspective, any attribute not denoted
+ * required is optional, whether recommended or not. An optional attribute may
+ * have a default value to be assumed if omitted. If no default is indicated,
+ * then by convention its absence should be interpreted as unknown, unless
+ * otherwise specified. Empty strings or null values should be interpreted the
+ * same as omitted (i.e., the default if one is specified or unknown otherwise).
+ *
+ * BEST PRACTICE: Exchanges and demand sources are encouraged to publish to
+ * their partners the set of optional objects and attributes they support along
+ * with any extensions to the specification.
+ */
+syntax = "proto3";
+
+package com.iab.openrtb;
+
+option optimize_for = SPEED;
+
+import "request.proto";
+import "response.proto";
+
+/**
+ * This top-level object is the root for both request and response payloads. It
+ * includes versioning information and references to the Layer-4 domain model on
+ * which transactions are based. By default, the domain model used by OpenRTB is
+ * the Advertising Common Object Model (AdCOM).
+ *
+ * Note: As a convention in this document, objects being defined are denoted with
+ * uppercase first letter in deference to the common convention for class names
+ * in programming languages such as Java, whereas actual instances of objects and
+ * references thereto in payloads are lowercase.
+ */
+message Openrtb {
+  // Version of the Layer-3 OpenRTB specification (e.g., "3.0").
+  string ver = 1;
+
+  // Identifier of the Layer-4 domain model used to define items for sale, media
+  // associated with bids, etc.
+  string domainspec = 2;
+
+  // Specification version of the Layer-4 domain model referenced in the
+  // domainspec attribute.
+  string domainver = 3;
+
+  // The payload.
+  oneof payload_oneof {
+    // Bid request container. Required only for request payloads.
+    Request request = 4;
+
+    // Bid response container. Required only for response payloads.
+    Response response = 5;
+  }
+}
+
