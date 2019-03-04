@@ -15,7 +15,7 @@
  */
 syntax = "proto3";
 
-package com.iab.openrtb;
+package com.iabtechlab.openrtb;
 
 option optimize_for = SPEED;
 

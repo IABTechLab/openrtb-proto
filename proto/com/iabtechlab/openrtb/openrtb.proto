@@ -23,12 +23,12 @@
  */
 syntax = "proto3";
 
-package com.iab.openrtb;
+package com.iabtechlab.openrtb;
 
 option optimize_for = SPEED;
 
-import "request.proto";
-import "response.proto";
+import "com/iabtechlab/openrtb/request.proto";
+import "com/iabtechlab/openrtb/response.proto";
 
 /**
  * This top-level object is the root for both request and response payloads. It
