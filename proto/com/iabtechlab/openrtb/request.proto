@@ -17,9 +17,8 @@ syntax = "proto3";
 
 package com.iabtechlab.openrtb;
 
-option optimize_for = SPEED;
-
 import "google/protobuf/any.proto";
+import "com/iabtechlab/openrtb/enums.proto";
 
 /**
  * The Request object contains a globally unique bid request ID. This id
@@ -45,7 +44,7 @@ message Request {
 
   // Auction type, where 1 = First Price, 2 = Second Price Plus. Values greater
   // than 500 can be used for exchange-specific auction types.
-  uint32 at = 4;
+  AuctionType at = 4;
 
   // Array of accepted currencies for bids on this bid request using ISO-4217
   // alpha codes. Recommended if the exchange accepts multiple currencies. If
@@ -59,7 +58,7 @@ message Request {
 
   // Flag that determines the restriction interpretation of the seat array,
   // where 0 = block list, 1 = whitelist.
-  int32 wseat = 7;
+  bool wseat = 7;
 
   // Allows bidder to retrieve data set on its behalf in the exchange’s cookie
   // (refer to cdata in Object: Response) if supported by the exchange. The
@@ -193,7 +192,7 @@ message Item {
   // item previously uploaded to the exchange must be referenced by its ID. Note
   // that if an exchange does not supported prior upload, then the default of 0
   // is effectively the same as 1 since there can be no items to reference.
-  uint32 dlvy = 8;
+  ItemDeliveryMethod dlvy = 8;
 
   // An array of Metric objects. Refer to Object: Metric.
   repeated Metric metric = 9;
@@ -238,7 +237,7 @@ message Deal {
   // First Price, 2 = Second Price Plus, 3 = the value passed in flr is the
   // agreed upon deal price. Additional auction types can be defined by the
   // exchange using 500+ values.
-  uint32 at = 4;
+  AuctionType at = 4;
 
   // Whitelist of buyer seats allowed to bid on this deal. IDs of seats and the
   // buyer’s customers to which they refer must be coordinated between bidders

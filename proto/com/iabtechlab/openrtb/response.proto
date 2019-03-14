@@ -12,9 +12,8 @@ syntax = "proto3";
 
 package com.iabtechlab.openrtb;
 
-option optimize_for = SPEED;
-
 import "google/protobuf/any.proto";
+import "com/iabtechlab/openrtb/enums.proto";
 
 /**
  * This object is the bid response object under the Openrtb root. Its id
@@ -41,7 +40,7 @@ message Response {
   // that while many exchanges prefer a simple HTTP 204 response to indicate a
   // no-bid, responses indicating a reason code can be useful in debugging
   // scenarios.
-  uint32 nbr = 3;
+  NoBidReason nbr = 3;
 
   // Bid currency using ISO-4217 alpha codes.
   string cur = 4;

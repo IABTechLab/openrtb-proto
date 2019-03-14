@@ -25,8 +25,6 @@ syntax = "proto3";
 
 package com.iabtechlab.openrtb;
 
-option optimize_for = SPEED;
-
 import "com/iabtechlab/openrtb/request.proto";
 import "com/iabtechlab/openrtb/response.proto";
 
