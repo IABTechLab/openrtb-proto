@@ -1,6 +1,7 @@
 # Build the docs for the proto3 definition.
 
 bindings:
+	mkdir -p java go
 	protoc --proto_path proto proto/com/iabtechlab/openrtb/openrtb.proto --java_out=java --go_out=go
 
 check:
@@ -11,7 +12,6 @@ clean:
 	rm -fr go/proto
 
 docs:
-	mkdir -p java go
 	docker run --rm \
   -v ${PWD}/doc:/out \
   -v ${PWD}/proto:/protos \
