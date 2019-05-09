@@ -23,10 +23,10 @@
  */
 syntax = "proto3";
 
-package com.iabtechlab.openrtb;
+package com.iabtechlab.openrtb.v3;
 
-import "com/iabtechlab/openrtb/request.proto";
-import "com/iabtechlab/openrtb/response.proto";
+import "com/iabtechlab/openrtb/v3/request.proto";
+import "com/iabtechlab/openrtb/v3/response.proto";
 
 /**
  * This top-level object is the root for both request and response payloads. It

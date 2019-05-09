@@ -2,7 +2,7 @@
 
 bindings:
 	mkdir -p java go
-	protoc --proto_path proto proto/com/iabtechlab/openrtb/openrtb.proto --java_out=java --go_out=go
+	protoc --proto_path proto proto/com/iabtechlab/openrtb/v3/openrtb.proto --java_out=java --go_out=go
 
 check:
 	prototool lint
@@ -16,9 +16,9 @@ docs:
   -v ${PWD}/doc:/out \
   -v ${PWD}/proto:/protos \
   pseudomuto/protoc-gen-doc --doc_opt=markdown,README.md --proto_path=/protos \
-	com/iabtechlab/openrtb/request.proto \
-	com/iabtechlab/openrtb/response.proto \
-	com/iabtechlab/openrtb/openrtb.proto
+	com/iabtechlab/openrtb/v3/request.proto \
+	com/iabtechlab/openrtb/v3/response.proto \
+	com/iabtechlab/openrtb/v3/openrtb.proto
 
 watch:
 	fswatch  -r ./proto/ | xargs -n1 make docs

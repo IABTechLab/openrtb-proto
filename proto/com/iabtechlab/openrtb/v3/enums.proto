@@ -3,7 +3,7 @@
  */
 syntax = "proto3";
 
-package com.iabtechlab.openrtb;
+package com.iabtechlab.openrtb.v3;
 
 enum AuctionType {
   AuctionType_UNKNOWN = 0;
@@ -53,7 +53,7 @@ enum LossReason {
   MISSING_BID_PRICE = 9;
   MISSING_APPROVAL_DATA = 10;
 
-  BID_BELOW_AUCION_FLOOR = 100;
+  BID_BELOW_AUCTION_FLOOR = 100;
   BID_BELOW_DEAL_FLOOR = 101;
   LOST_TO_HIGHER_BID = 102;
   LOST_TO_DEAL = 103;
