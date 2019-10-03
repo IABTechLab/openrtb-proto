@@ -43,8 +43,9 @@ message Request {
   uint32 tmax = 3;
 
   // Auction type, where 1 = First Price, 2 = Second Price Plus. Values greater
-  // than 500 can be used for exchange-specific auction types.
-  AuctionType at = 4;
+  // than 500 can be used for exchange-specific auction types. Common values
+  // are defined in the enumeration AuctionType.
+  int32 at = 4;
 
   // Array of accepted currencies for bids on this bid request using ISO-4217
   // alpha codes. Recommended if the exchange accepts multiple currencies. If
@@ -192,7 +193,8 @@ message Item {
   // item previously uploaded to the exchange must be referenced by its ID. Note
   // that if an exchange does not supported prior upload, then the default of 0
   // is effectively the same as 1 since there can be no items to reference.
-  ItemDeliveryMethod dlvy = 8;
+  // Common values are defined in the enumeration ItemDeliveryMethod.
+  int32ItemDeliveryMethod dlvy = 8;
 
   // An array of Metric objects. Refer to Object: Metric.
   repeated Metric metric = 9;
@@ -236,8 +238,9 @@ message Deal {
   // Optional override of the overall auction type of the request, where 1 =
   // First Price, 2 = Second Price Plus, 3 = the value passed in flr is the
   // agreed upon deal price. Additional auction types can be defined by the
-  // exchange using 500+ values.
-  AuctionType at = 4;
+  // exchange using 500+ values. Common values are defined in the enumeration
+  // AuctionType.
+  int32 at = 4;
 
   // Whitelist of buyer seats allowed to bid on this deal. IDs of seats and the
   // buyer’s customers to which they refer must be coordinated between bidders

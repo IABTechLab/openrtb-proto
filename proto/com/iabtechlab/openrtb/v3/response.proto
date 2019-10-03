@@ -39,8 +39,8 @@ message Response {
   // Reason for not bidding if applicable (see List: No-Bid Reason Codes). Note
   // that while many exchanges prefer a simple HTTP 204 response to indicate a
   // no-bid, responses indicating a reason code can be useful in debugging
-  // scenarios.
-  NoBidReason nbr = 3;
+  // scenarios. Common values are defined in the enumeration NoBidReason.
+  int32 nbr = 3;
 
   // Bid currency using ISO-4217 alpha codes.
   string cur = 4;
