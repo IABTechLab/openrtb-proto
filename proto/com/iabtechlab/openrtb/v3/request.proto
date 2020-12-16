@@ -194,7 +194,7 @@ message Item {
   // that if an exchange does not supported prior upload, then the default of 0
   // is effectively the same as 1 since there can be no items to reference.
   // Common values are defined in the enumeration ItemDeliveryMethod.
-  int32ItemDeliveryMethod dlvy = 8;
+  int32 dlvy = 8;
 
   // An array of Metric objects. Refer to Object: Metric.
   repeated Metric metric = 9;
