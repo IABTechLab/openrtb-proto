@@ -21,7 +21,7 @@
  * their partners the set of optional objects and attributes they support along
  * with any extensions to the specification.
  */
-syntax = "proto3";
+syntax = "proto2";
 
 package com.iabtechlab.openrtb.v3;
 
@@ -41,15 +41,15 @@ import "com/iabtechlab/openrtb/v3/response.proto";
  */
 message Openrtb {
   // Version of the Layer-3 OpenRTB specification (e.g., "3.0").
-  string ver = 1;
+  optional string ver = 1;
 
   // Identifier of the Layer-4 domain model used to define items for sale, media
   // associated with bids, etc.
-  string domainspec = 2;
+  optional string domainspec = 2;
 
   // Specification version of the Layer-4 domain model referenced in the
   // domainspec attribute.
-  string domainver = 3;
+  optional string domainver = 3;
 
   // The payload.
   oneof payload_oneof {
