@@ -58,7 +58,7 @@ message Request {
   repeated string seat = 6;
 
   // Flag that determines the restriction interpretation of the seat array,
-  // where 0 = block list, 1 = whitelist.
+  // where 0 = blocklist, 1 = allowlist.
   bool wseat = 7;
 
   // Allows bidder to retrieve data set on its behalf in the exchange’s cookie
@@ -242,7 +242,7 @@ message Deal {
   // AuctionType.
   int32 at = 4;
 
-  // Whitelist of buyer seats allowed to bid on this deal. IDs of seats and the
+  // Allowlist of buyer seats allowed to bid on this deal. IDs of seats and the
   // buyer’s customers to which they refer must be coordinated between bidders
   // and the exchange a priori. Omission implies no restrictions.
   repeated string wseat = 5;
