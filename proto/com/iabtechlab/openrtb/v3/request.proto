@@ -13,11 +13,10 @@
  * the item being offered (e.g., the impression opportunity) and specifications
  * and restrictions on the media that can be associated with acceptable bids.
  */
-syntax = "proto3";
+syntax = "proto2";
 
 package com.iabtechlab.openrtb.v3;
 
-import "google/protobuf/any.proto";
 import "com/iabtechlab/openrtb/v3/enums.proto";
 
 /**
@@ -29,23 +28,23 @@ import "com/iabtechlab/openrtb/v3/enums.proto";
  */
 message Request {
   // Unique ID of the bid request; provided by the exchange.
-  string id = 1;
+  optional string id = 1;
 
   // Indicator of test mode in which auctions are not billable, where 0 =
   // live mode, 1 = test mode.
-  bool test = 2;
+  optional bool test = 2;
 
   // Maximum time in milliseconds the exchange allows for bids to be received
   // including Internet latency to avoid timeout. This value supersedes any a
   // priori guidance from the exchange. If an exchange acts as an intermediary,
   // it should decrease the outbound tmax value from what it received to account
   // for its latency and the additional internet hop.
-  uint32 tmax = 3;
+  optional uint32 tmax = 3;
 
   // Auction type, where 1 = First Price, 2 = Second Price Plus. Values greater
   // than 500 can be used for exchange-specific auction types. Common values
   // are defined in the enumeration AuctionType.
-  int32 at = 4;
+  optional int32 at = 4;
 
   // Array of accepted currencies for bids on this bid request using ISO-4217
   // alpha codes. Recommended if the exchange accepts multiple currencies. If
@@ -59,16 +58,16 @@ message Request {
 
   // Flag that determines the restriction interpretation of the seat array,
   // where 0 = blocklist, 1 = allowlist.
-  bool wseat = 7;
+  optional bool wseat = 7;
 
   // Allows bidder to retrieve data set on its behalf in the exchange’s cookie
   // (refer to cdata in Object: Response) if supported by the exchange. The
   // string must be in base85 cookie-safe characters.
-  string cdata = 8;
+  optional string cdata = 8;
 
   // A Source object that provides data about the inventory source and which
   // entity makes the final decision. Refer to Object: Source.
-  Source source = 9;
+  optional Source source = 9;
 
   // Array of Item objects (at least one) that constitute the set of goods being
   // offered for sale. Refer to Object: Item.
@@ -78,7 +77,7 @@ message Request {
   // represent all of the items available in context (e.g., all impressions on a
   // web page, all video spots such as pre/mid/post roll) to support
   // road-blocking, where 0 = no, 1 = yes.
-  bool package = 11;
+  optional bool package = 11;
 
   // Layer-4 domain object structure that provides context for the items being
   // offered conforming to the specification and version referenced in
@@ -87,10 +86,10 @@ message Request {
   // of the DistributionChannel subtypes (i.e., Site, App, or Dooh), User,
   // Device, Regs, Restrictions, and any objects subordinate to these as
   // specified by AdCOM.
-  google.protobuf.Any context = 12;
+  optional bytes context = 12;
 
   // Optional exchange-specific extensions.
-  google.protobuf.Any ext = 100;
+  extensions 100 to 9999;
 }
 
 
@@ -109,45 +108,45 @@ message Source {
   // entire supply chain of this transaction. This also applies across all
   // participating exchanges in a header bidding or similar publisher-centric
   // broadcast scenario.
-  string tid = 1;
+  optional string tid = 1;
 
   // Timestamp when the request originated at the beginning of the supply chain
   // in Unix format (i.e., milliseconds since the epoch). This value must be
   // held as immutable throughout subsequent intermediaries.
-  uint64 ts = 2;
+  optional uint64 ts = 2;
 
   // Digital signature used to authenticate the origin of this request computed
   // by the publisher or its trusted agent from a digest string composed of a
   // set of immutable attributes found in the bid request. Refer to Section
   // “Inventory Authentication” for more details.
-  string ds = 3;
+  optional string ds = 3;
 
   // An ordered list of identifiers that indicates the attributes used to create
   // the digest. This map provides the essential instructions for recreating the
   // digest from the bid request, which is a necessary step in validating the
   // digital signature in the ds attribute. Refer to Section “Inventory
   // Authentication” for more details.
-  string dsmap = 4;
+  optional string dsmap = 4;
 
   // File name of the certificate (i.e., the public key) used to generate the
   // digital signature in the ds attribute. Refer to Section “Inventory
   // Authentication” for more details.
-  string cert = 5;
+  optional string cert = 5;
 
   // The full digest string that was signed to produce the digital signature.
   // Refer to Section “Inventory Authentication” for more details.
   // NOTE: This is only intended for debugging purposes as needed. It is not
   // intended for normal Production traffic due to the bandwidth impact.
-  string digest = 6;
+  optional string digest = 6;
 
   // Payment ID chain string containing embedded syntax described in the TAG
   // Payment ID Protocol.
   // NOTE: Authentication features in this Source object combined with the
   // “ads.txt” specification may lead to the deprecation of this attribute.
-  string pchain = 7;
+  optional string pchain = 7;
 
   // Optional exchange-specific extensions.
-  google.protobuf.Any ext = 100;
+  extensions 100 to 9999;
 }
 
 
@@ -162,30 +161,30 @@ message Source {
 message Item {
   // A unique identifier for this item within the context of the offer
   // (typically starts with “1” and increments).
-  string id = 1;
+  optional string id = 1;
 
   // The number of instances (i.e., “quantity”) of this item being offered
   // (e.g., multiple identical impressions in a digital out-of-home scenario).
-  uint32 qty = 2;
+  optional uint32 qty = 2;
 
   // If multiple items are offered in the same bid request, the sequence number
   // allows for the coordinated delivery.
-  uint32 seq = 3;
+  optional uint32 seq = 3;
 
   // Minimum bid price for this item expressed in CPM.
-  float flr = 4;
+  optional float flr = 4;
 
   // Currency of the flr attribute specified using ISO-4217 alpha codes.
-  string flrcur = 5;
+  optional string flrcur = 5;
 
   // Advisory as to the number of seconds that may elapse between auction and
   // fulfilment.
-  uint64 exp = 6;
+  optional uint64 exp = 6;
 
   // Timestamp when the item is expected to be fulfilled (e.g. when a DOOH
   // impression will be displayed) in Unix format (i.e., milliseconds since the
   // epoch).
-  uint64 dt = 7;
+  optional uint64 dt = 7;
 
   // Item (e.g., an Ad object) delivery method required, where 0 = either
   // method, 1 = the item must be sent as part of the transaction (e.g., by
@@ -194,7 +193,7 @@ message Item {
   // that if an exchange does not supported prior upload, then the default of 0
   // is effectively the same as 1 since there can be no items to reference.
   // Common values are defined in the enumeration ItemDeliveryMethod.
-  int32 dlvy = 8;
+  optional int32 dlvy = 8;
 
   // An array of Metric objects. Refer to Object: Metric.
   repeated Metric metric = 9;
@@ -206,17 +205,17 @@ message Item {
   // Indicator of auction eligibility to seats named in Deal objects, where 0 =
   // all bids are accepted, 1 = bids are restricted to the deals specified and
   // the terms thereof.
-  bool private = 11;
+  optional bool private = 11;
 
   // Layer-4 domain object structure that provides specifies the item being
   // offered conforming to the specification and version referenced in
   // openrtb.domainspec and openrtb.domainver.
   // For AdCOM v1.x, the objects allowed here are Placement and any objects
   // subordinate to these as specified by AdCOM.
-  google.protobuf.Any spec = 12;
+  optional bytes spec = 12;
 
   // Optional exchange-specific extensions.
-  google.protobuf.Any ext = 100;
+  extensions 100 to 9999;
 }
 
 
@@ -227,20 +226,20 @@ message Item {
  */
 message Deal {
   // A unique identifier for the deal.
-  string id = 1;
+  optional string id = 1;
 
   // Minimum deal price for this item expressed in CPM.
-  float flr = 2;
+  optional float flr = 2;
 
   // Currency of the flr attribute specified using ISO-4217 alpha codes.
-  string flrcur = 3;
+  optional string flrcur = 3;
 
   // Optional override of the overall auction type of the request, where 1 =
   // First Price, 2 = Second Price Plus, 3 = the value passed in flr is the
   // agreed upon deal price. Additional auction types can be defined by the
   // exchange using 500+ values. Common values are defined in the enumeration
   // AuctionType.
-  int32 at = 4;
+  optional int32 at = 4;
 
   // Allowlist of buyer seats allowed to bid on this deal. IDs of seats and the
   // buyer’s customers to which they refer must be coordinated between bidders
@@ -252,7 +251,7 @@ message Deal {
   repeated string wadomain = 6;
 
   // Optional exchange-specific extensions.
-  google.protobuf.Any ext = 100;
+  extensions 100 to 9999;
 }
 
 
@@ -266,18 +265,18 @@ message Deal {
 message Metric {
   // Type of metric being presented using exchange curated string names which
   // should be published to bidders a priori.
-  string type = 1;
+  optional string type = 1;
 
   // Number representing the value of the metric. Probabilities must be in the
   // range 0.0 – 1.0.
-  float value = 2;
+  optional float value = 2;
 
   // Source of the value using exchange curated string names which should be
   // published to bidders a priori. If the exchange itself is the source versus
   // a third party, “EXCHANGE” is recommended.
-  string vendor = 3;
+  optional string vendor = 3;
 
   // Optional exchange-specific extensions.
-  google.protobuf.Any ext = 100;
+  extensions 100 to 9999;
 }
 
