@@ -43,7 +43,7 @@ message Request {
 
   // Auction type, where 1 = First Price, 2 = Second Price Plus. Values greater
   // than 500 can be used for exchange-specific auction types. Common values
-  // are defined in the enumeration AuctionType.
+  // are defined in the enumeration com.iabtechlab.openrtb.v3.AuctionType.
   optional int32 at = 4;
 
   // Array of accepted currencies for bids on this bid request using ISO-4217
@@ -163,28 +163,39 @@ message Item {
   // (typically starts with “1” and increments).
   optional string id = 1;
 
-  // The number of instances (i.e., “quantity”) of this item being offered
-  // (e.g., multiple identical impressions in a digital out-of-home scenario).
-  optional uint32 qty = 2;
+  oneof qty_oneof {
+    // The quantity of billable events which will be deemed to have occured if
+    // this item is purchased. In most cases, this represents impressions. For
+    // example, a single display of an ad on a DOOH placement may count as multiple
+    // impressions on the basis of expected viewership. In such a case, qty would
+    // be greater than 1.
+    optional uint32 qty = 2;
+
+    // The quantity of billable events which will be deemed to have occured if this
+    // item is purchased. This version of the fields exists for cases where the
+    // quantity is not expressed as a whole number. For example, a DOOH opportunity
+    // may be considered to be 14.2 impressions.
+    optional float qtyflt = 3;
+  }
 
   // If multiple items are offered in the same bid request, the sequence number
   // allows for the coordinated delivery.
-  optional uint32 seq = 3;
+  optional uint32 seq = 4;
 
   // Minimum bid price for this item expressed in CPM.
-  optional float flr = 4;
+  optional float flr = 5;
 
   // Currency of the flr attribute specified using ISO-4217 alpha codes.
-  optional string flrcur = 5;
+  optional string flrcur = 6;
 
   // Advisory as to the number of seconds that may elapse between auction and
   // fulfilment.
-  optional uint64 exp = 6;
+  optional uint64 exp = 7;
 
   // Timestamp when the item is expected to be fulfilled (e.g. when a DOOH
   // impression will be displayed) in Unix format (i.e., milliseconds since the
   // epoch).
-  optional uint64 dt = 7;
+  optional uint64 dt = 8;
 
   // Item (e.g., an Ad object) delivery method required, where 0 = either
   // method, 1 = the item must be sent as part of the transaction (e.g., by
@@ -192,27 +203,28 @@ message Item {
   // item previously uploaded to the exchange must be referenced by its ID. Note
   // that if an exchange does not supported prior upload, then the default of 0
   // is effectively the same as 1 since there can be no items to reference.
-  // Common values are defined in the enumeration ItemDeliveryMethod.
-  optional int32 dlvy = 8;
+  // Common values are defined in the enumeration
+  // com.iabtechlab.openrtb.v3.ItemDeliveryMethod.
+  optional int32 dlvy = 9;
 
   // An array of Metric objects. Refer to Object: Metric.
-  repeated Metric metric = 9;
+  repeated Metric metric = 10;
 
   // Array of Deal objects that convey special terms applicable to this item.
   // Refer to Object: Deal.
-  repeated Deal deal = 10;
+  repeated Deal deal = 11;
 
   // Indicator of auction eligibility to seats named in Deal objects, where 0 =
   // all bids are accepted, 1 = bids are restricted to the deals specified and
   // the terms thereof.
-  optional bool private = 11;
+  optional bool private = 12;
 
   // Layer-4 domain object structure that provides specifies the item being
   // offered conforming to the specification and version referenced in
   // openrtb.domainspec and openrtb.domainver.
   // For AdCOM v1.x, the objects allowed here are Placement and any objects
   // subordinate to these as specified by AdCOM.
-  optional bytes spec = 12;
+  optional bytes spec = 13;
 
   // Optional exchange-specific extensions.
   extensions 100 to 9999;
@@ -238,7 +250,7 @@ message Deal {
   // First Price, 2 = Second Price Plus, 3 = the value passed in flr is the
   // agreed upon deal price. Additional auction types can be defined by the
   // exchange using 500+ values. Common values are defined in the enumeration
-  // AuctionType.
+  // com.iabtechlab.openrtb.v3.AuctionType.
   optional int32 at = 4;
 
   // Allowlist of buyer seats allowed to bid on this deal. IDs of seats and the

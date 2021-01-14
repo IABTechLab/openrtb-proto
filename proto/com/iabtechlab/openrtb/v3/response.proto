@@ -38,7 +38,8 @@ message Response {
   // Reason for not bidding if applicable (see List: No-Bid Reason Codes). Note
   // that while many exchanges prefer a simple HTTP 204 response to indicate a
   // no-bid, responses indicating a reason code can be useful in debugging
-  // scenarios. Common values are defined in the enumeration NoBidReason.
+  // scenarios. Common values are defined in the enumeration
+  // com.iabtechlab.openrtb.v3.NoBidReason.
   optional int32 nbr = 3;
 
   // Bid currency using ISO-4217 alpha codes.
