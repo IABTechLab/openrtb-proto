@@ -169,13 +169,13 @@ message Item {
     // example, a single display of an ad on a DOOH placement may count as multiple
     // impressions on the basis of expected viewership. In such a case, qty would
     // be greater than 1.
-    optional uint32 qty = 2;
+    uint32 qty = 2;
 
     // The quantity of billable events which will be deemed to have occured if this
     // item is purchased. This version of the fields exists for cases where the
     // quantity is not expressed as a whole number. For example, a DOOH opportunity
     // may be considered to be 14.2 impressions.
-    optional float qtyflt = 3;
+    float qtyflt = 3;
   }
 
   // If multiple items are offered in the same bid request, the sequence number
